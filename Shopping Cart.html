@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- this is css style -->
+    <style>
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.like.liked {
+    color: red;
+}
+</style>
+
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <div id="cart">
+        <!-- Sample item in the cart -->
+        <div class="cart-item">
+            <span class="item-name">Item 1</span>
+            <span class="item-price">$10.00</span>
+            <button class="decrement">-</button>
+            <span class="quantity">1</span>
+            <button class="increment">+</button>
+            <button class="delete">Delete</button>
+            <button class="like">Like</button>
+        </div>
+        <!-- Add more items here -->
+    </div>
+    <div id="total">Total: $10.00</div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cartItems = document.querySelectorAll('.cart-item');
+    const totalElement = document.getElementById('total');
+
+    cartItems.forEach(item => {
+        const decrementButton = item.querySelector('.decrement');
+        const incrementButton = item.querySelector('.increment');
+        const deleteButton = item.querySelector('.delete');
+        const likeButton = item.querySelector('.like');
+        const quantityElement = item.querySelector('.quantity');
+        const priceElement = item.querySelector('.item-price');
+
+        let quantity = parseInt(quantityElement.textContent);
+
+        // Decrement quantity
+        decrementButton.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.textContent = quantity;
+                updateTotal();
+            }
+        });
+
+        // Increment quantity
+        incrementButton.addEventListener('click', () => {
+            quantity++;
+            quantityElement.textContent = quantity;
+            updateTotal();
+        });
+
+        // Delete item
+        deleteButton.addEventListener('click', () => {
+            item.remove();
+            updateTotal();
+        });
+
+        // Like item (change color)
+        likeButton.addEventListener('click', () => {
+            likeButton.classList.toggle('liked');
+        });
+
+        // Function to update total price
+        function updateTotal() {
+            const itemPrice = parseFloat(priceElement.textContent.replace('$', ''));
+            const totalPrice = itemPrice * quantity;
+            totalElement.textContent = `Total: $${totalPrice.toFixed(2)}`;
+        }
+    });
+});
+
+
+    </script>
+</body>
+</html>
